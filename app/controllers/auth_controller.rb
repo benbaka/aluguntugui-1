@@ -3,12 +3,15 @@ class AuthController < ApplicationController
     @username = params[:auth][:username]
     @password = params[:auth][:password]
 
-    if 1==1
-      flash[:danger] = "Login Successful !"
-      redirect_to auth_landing_path
-    else
-      flash[:danger] = "Invalid email/password combination"
-      render 'home'
+    user = User.find_by_name(@username)
+    if user
+      if user.authenticate(@password)
+        flash[:success] = "Login Successful !"
+        redirect_to auth_landing_path
+      else
+        flash[:danger] = "Invalid email/password combination"
+        render 'home'
+      end
     end
 
   end
