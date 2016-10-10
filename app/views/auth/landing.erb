@@ -5,4 +5,7 @@
 </div>
 
 
-Welcome
+<h2>Welcome <%= @current_user.name %></h2>
+<br/>
+
+<%= link_to "Logout", auth_logout_path %>
