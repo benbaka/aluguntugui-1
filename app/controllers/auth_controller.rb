@@ -23,6 +23,7 @@ class AuthController < ApplicationController
 
   def logout
     log_out
+    flash[:success] = "Thank you for learning with us !"
     redirect_to auth_home_path
   end
 
