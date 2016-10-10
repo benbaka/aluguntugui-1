@@ -1,4 +1,8 @@
 class AuthController < ApplicationController
+  skip_before_action :require_login, only: [:home, :login]
+
+
+
   def login
     @username = params[:auth][:username]
     @password = params[:auth][:password]
@@ -7,6 +11,7 @@ class AuthController < ApplicationController
     if user
       if user.authenticate(@password)
         flash[:success] = "Login Successful !"
+        login_user(user)
         redirect_to auth_landing_path
       else
         flash[:danger] = "Invalid email/password combination"
@@ -17,9 +22,14 @@ class AuthController < ApplicationController
   end
 
   def logout
+    log_out
+    redirect_to auth_home_path
   end
 
   def home
+    if logged_in?
+      redirect_to auth_landing_path
+    end
   end
 
   def landing
