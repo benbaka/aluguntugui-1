@@ -17,8 +17,10 @@ class AuthController < ApplicationController
         flash[:danger] = "Invalid email/password combination"
         render 'home'
       end
+    else
+        flash[:danger] = "Invalid email/password combination"
+        render 'home'
     end
-
   end
 
   def logout
